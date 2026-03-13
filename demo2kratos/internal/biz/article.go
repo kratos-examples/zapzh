@@ -8,6 +8,7 @@ import (
 	"github.com/yylego/kratos-ebz/ebzkratos"
 	pb "github.com/yylego/kratos-examples/demo2kratos/api/article"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/data"
+	"github.com/yylego/kratos-zapzh/zapzhkratos"
 )
 
 type Article struct {
@@ -19,11 +20,11 @@ type Article struct {
 
 type ArticleUsecase struct {
 	data *data.Data
-	log  *log.Helper
+	slog *log.Helper
 }
 
-func NewArticleUsecase(data *data.Data, logger log.Logger) *ArticleUsecase {
-	return &ArticleUsecase{data: data, log: log.NewHelper(logger)}
+func NewArticleUsecase(data *data.Data, zap匝普日志 *zapzhkratos.T匝普日志) *ArticleUsecase {
+	return &ArticleUsecase{data: data, slog: zap匝普日志.Get奎沱秘书("业务逻辑")}
 }
 
 func (uc *ArticleUsecase) CreateArticle(ctx context.Context, a *Article) (*Article, *ebzkratos.Ebz) {
