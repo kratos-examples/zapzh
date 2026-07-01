@@ -2,11 +2,12 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package main
 
 import (
-	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v3"
 	"github.com/yylego/kratos-examples/demo1kratos/internal/biz"
 	"github.com/yylego/kratos-examples/demo1kratos/internal/conf"
 	"github.com/yylego/kratos-examples/demo1kratos/internal/data"
@@ -27,7 +28,11 @@ func wireApp(confServer *conf.Server, confData *conf.Data, t匝普日志 *zapzhk
 	if err != nil {
 		return nil, nil, err
 	}
-	studentUsecase := biz.NewStudentUsecase(dataData, t匝普日志)
+	studentUsecase, err := biz.NewStudentUsecase(dataData, t匝普日志)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
 	studentService := service.NewStudentService(studentUsecase, t匝普日志)
 	grpcServer := server.NewGRPCServer(confServer, studentService, t匝普日志)
 	httpServer := server.NewHTTPServer(confServer, studentService, t匝普日志)

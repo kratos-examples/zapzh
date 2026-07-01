@@ -6,7 +6,7 @@ import (
 	"github.com/yylego/kratos-zapzh/zapzhkratos"
 	"github.com/yylego/must"
 	"github.com/yylego/rese"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -16,11 +16,18 @@ type Data struct {
 	db *gorm.DB
 }
 
+// DB exposes the underlying gorm handle so the biz code can run true queries.
+//
+// DB 暴露底层 gorm 句柄，供 biz 层执行真实的数据库读写
+func (d *Data) DB() *gorm.DB {
+	return d.db
+}
+
 func NewData(c *conf.Data, zap匝普日志 *zapzhkratos.T匝普日志) (*Data, func(), error) {
 	zapLog := zap匝普日志.Sub模块匝普()
 	zapLog.SUG.Debugln("准备链接数据资源")
-	must.Same(c.Database.Driver, "sqlite3")
-	db := rese.P1(gorm.Open(sqlite.Open(c.Database.Source), &gorm.Config{}))
+	must.Same(c.Database.Driver, "postgres")
+	db := rese.P1(gorm.Open(postgres.Open(c.Database.Source), &gorm.Config{}))
 	cleanup := func() {
 		zapLog.SUG.Info("准备关闭数据资源")
 		_ = rese.P1(db.DB()).Close()

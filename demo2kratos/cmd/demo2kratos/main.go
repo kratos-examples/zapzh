@@ -4,17 +4,18 @@ import (
 	"flag"
 	"os"
 
-	"github.com/go-kratos/kratos/v2"
-	"github.com/go-kratos/kratos/v2/config"
-	"github.com/go-kratos/kratos/v2/config/file"
-	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/go-kratos/kratos/v3"
+	"github.com/go-kratos/kratos/v3/config"
+	"github.com/go-kratos/kratos/v3/config/file"
+	"github.com/go-kratos/kratos/v3/transport/grpc"
+	"github.com/go-kratos/kratos/v3/transport/http"
 	"github.com/yylego/done"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/conf"
 	"github.com/yylego/kratos-zapzh/zapzhkratos"
 	"github.com/yylego/must"
 	"github.com/yylego/rese"
 	"github.com/yylego/zaplog"
+
 	_ "go.uber.org/automaxprocs"
 )
 
@@ -49,12 +50,12 @@ func newApp(gs *grpc.Server, hs *http.Server, zap匝普日志 *zapzhkratos.T匝�
 func main() {
 	flag.Parse()
 
-	// demo2 uses Get奎沱秘书 to get *log.Helper (Kratos style)
-	// demo2 使用 Get奎沱秘书 获取 *log.Helper（Kratos 风格）
+	// demo2 uses Get奎沱秘书 to derive a *slog.Logger for the startup logs
+	// demo2 使用 Get奎沱秘书 派生 *slog.Logger 打印启动日志
 	zapKratos := zapzhkratos.New匝普日志(zaplog.LOGGER, zapzhkratos.New日志配置())
 	slog := zapKratos.Get奎沱秘书("启动日志")
-	slog.Infof("服务版本: %s", Version)
-	slog.Infof("配置路径: %s", flagconf)
+	slog.Info("服务版本", "version", Version)
+	slog.Info("配置路径", "config", flagconf)
 
 	c := config.New(
 		config.WithSource(

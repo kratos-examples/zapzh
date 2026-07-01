@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/go-kratos/kratos/v2/middleware/logging"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/go-kratos/kratos/v3/middleware/logging"
+	"github.com/go-kratos/kratos/v3/middleware/recovery"
+	"github.com/go-kratos/kratos/v3/transport/http"
 	pb "github.com/yylego/kratos-examples/demo2kratos/api/article"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/conf"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/service"
@@ -14,7 +14,7 @@ func NewHTTPServer(c *conf.Server, article *service.ArticleService, zap匝普日
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
-			logging.Server(zap匝普日志.Get奎沱日志("HTTP请求")),
+			logging.Server(zap匝普日志.Get奎沱日志("HTTP请求日志")),
 		),
 	}
 	if c.Http.Network != "" {

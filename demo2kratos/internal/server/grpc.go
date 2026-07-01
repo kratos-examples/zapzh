@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/go-kratos/kratos/v2/middleware/logging"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/transport/grpc"
+	"github.com/go-kratos/kratos/v3/middleware/logging"
+	"github.com/go-kratos/kratos/v3/middleware/recovery"
+	"github.com/go-kratos/kratos/v3/transport/grpc"
 	pb "github.com/yylego/kratos-examples/demo2kratos/api/article"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/conf"
 	"github.com/yylego/kratos-examples/demo2kratos/internal/service"
@@ -14,7 +14,7 @@ func NewGRPCServer(c *conf.Server, article *service.ArticleService, zap匝普日
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
-			logging.Server(zap匝普日志.Get奎沱日志("GRPC请求")),
+			logging.Server(zap匝普日志.Get奎沱日志("GRPC请求日志")),
 		),
 	}
 	if c.Grpc.Network != "" {
